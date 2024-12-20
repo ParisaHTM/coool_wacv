@@ -35,6 +35,8 @@
 6. **[correct_wrong_caption_dr_result.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/correct_wrong_caption_dr_result.ipynb)**  
    Handling cases where videos recognize wrong hazards or have incorrect captions. Reappling depth calculation to identify the frame closest to the dashcam and regenerating captions for this frame and surrounding frames. Select captions containing specific keywords, considering their frequency.
 
+7. **[Hazard_via_depth_and_motion_slopes.py](https://github.com/ParisaHTM/coool_wacv/blob/main/Hazard_via_depth_and_motion_slopes.py)**
+
 ## Results
 Original frame
 
