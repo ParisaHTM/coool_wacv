@@ -20,19 +20,8 @@
 
 5. **[baseline_OF_roadmask_blip_midas3.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/baseline_OF_roadmask_blip_midas3.ipynb)**  
    Matches IDs of objects identified as being on the road (from Step 4) and close to the dashcam (from Step 2). Creates captions for objects without captions from Step 3. The process involves handling six scenarios:
-   1. Objects from both road segmentation and MiDaS overlap, and captions are already generated.
-   2. Objects overlap, but captions are missing:
-      - Use Ground Captioning, and if no caption is generated, use BLIP directly.
-   3. No overlap between road segmentation and MiDaS objects:
-      - Use IDs and captions from Step 2. If no captions are present, generate them using BLIP directly.
-   4. Overlap exceeds 10 objects:
-      - Consider all objects from both sets and generate captions from Step 2 or BLIP directly.
-   5. If objects on the road exceed 12:
-      - Focus only on these objects to avoid exceeding limits, generating captions from Step 2 or BLIP.
-   6. No overlap between road segmentation and MiDaS, and no captions from Step 2:
-      - Use Ground Captioning or BLIP directly for these objects.
 
-      This step focuses on matching objects identified as being on the road (from **Step 4**) and close to the dashcam (from **Step 2**) to generate captions for objects without captions from **Step 3**. Below are the six scenarios handled in this process:
+   This step focuses on matching objects identified as being on the road (from **Step 4**) and close to the dashcam (from **Step 2**) to generate captions for objects without captions from **Step 3**. Below are the six scenarios handled in this process:
       
       | **Scenario** | **Condition**                                                                                   | **Action**                                                                                                    |
       |--------------|-------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
