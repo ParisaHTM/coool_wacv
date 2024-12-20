@@ -1,4 +1,5 @@
 ﻿# Challenge Of Out-Of-Label in Autonomous Driving
+![COOOL](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/Logo%20maker%20project-3%20(11).png)
  WACV2025 Challenge for detecting Out-Of-Label hazards from dashcam videos
 
  ## Overview
@@ -33,5 +34,8 @@
 
 6. **[correct_wrong_caption_dr_result.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/correct_wrong_caption_dr_result.ipynb)**  
    Handles cases where videos recognize wrong hazards or have incorrect captions. Reapplies depth calculation to identify the frame closest to the dashcam and regenerates captions for this frame and surrounding frames. Selects captions containing specific keywords, considering their frequency.
+
+## Results
+1. [original]()
 
 
