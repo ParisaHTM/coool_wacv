@@ -36,6 +36,9 @@
    Handling cases where videos recognize wrong hazards or have incorrect captions. Reappling depth calculation to identify the frame closest to the dashcam and regenerating captions for this frame and surrounding frames. Select captions containing specific keywords, considering their frequency.
 
 7. **[Hazard_via_depth_and_motion_slopes.py](https://github.com/ParisaHTM/coool_wacv/blob/main/Hazard_via_depth_and_motion_slopes.py)**
+   Ablation Study: Loads annotations and results, then iterates through multiple videos frame by frame.
+It uses a depth-estimation model to compute depth maps for objects and a captioning model to describe them.
+By tracking objects and calculating their slopes and relative depths, it identifies potential hazards. These hazards are annotated on the frames, including their average depth, captions, and directional movement.
 
 ## Results
 Original frame
