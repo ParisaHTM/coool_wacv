@@ -11,16 +11,16 @@
    Utilizes NAFNet to improve the quality of videos.
 
 2. **[baseline_OF_roadmask_blip_midas1.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/baseline_OF_roadmask_blip_midas1.ipynb)**  
-   Applies optical flow to determine the driver state and uses MiDaS to exclude far objects. Saves frames where close objects are nearest to the dashcam.
+   Applying optical flow to determine the driver state and uses MiDaS to exclude far objects. Saving frames where close objects are nearest to the dashcam.
 
 3. **[baseline_OF_roadmask_blip_midas2.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/baseline_OF_roadmask_blip_midas2.ipynb)**  
-   Generates captions for detected close objects using grounding captions in BLIP. Excludes close objects recognized as "car" from this step.
+   Generating captions for detected close objects using grounding captions in BLIP (We expanded the boxes for BLIP to see context as well).Excluding close objects recognized as "car" from this step.
 
 4. **[road_masking.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/road_masking.ipynb)**  
-   Uses Segformer for road segmentation and saves the IDs of objects located on the road.
+   Using Segformer for road segmentation and saves the IDs of objects located on the road.
 
 5. **[baseline_OF_roadmask_blip_midas3.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/baseline_OF_roadmask_blip_midas3.ipynb)**  
-   Matches IDs of objects identified as being on the road (from Step 4) and close to the dashcam (from Step 2). Creates captions for objects without captions from Step 3. The process involves handling six scenarios:
+   Matching IDs of objects identified as being on the road (from Step 4) and close to the dashcam (from Step 2). Creating captions for objects without captions from Step 3. The process involves handling six scenarios:
       
       | **Scenario** | **Condition**                                                                                   | **Action**                                                                                                    |
       |--------------|-------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
@@ -33,9 +33,20 @@
 
 
 6. **[correct_wrong_caption_dr_result.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/correct_wrong_caption_dr_result.ipynb)**  
-   Handles cases where videos recognize wrong hazards or have incorrect captions. Reapplies depth calculation to identify the frame closest to the dashcam and regenerates captions for this frame and surrounding frames. Selects captions containing specific keywords, considering their frequency.
+   Handling cases where videos recognize wrong hazards or have incorrect captions. Reappling depth calculation to identify the frame closest to the dashcam and regenerating captions for this frame and surrounding frames. Select captions containing specific keywords, considering their frequency.
 
 ## Results
-1. [original]()
+Original frame
+![Original](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/frame_0095_original.png)
+1. Applying NAFNet
+   ![NAFNET](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/frame_0095.png)
+2. All objects
+   ![All_objects](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_hazard%20(2)_frame95.jpg)
+3. Applying optical flow to determine driver_state and MiDaS to exclude far objects:
+   ![MIDAS](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_midas_hazard_v1_frame95.jpg)
+4. Generate captions for those close objects and exclude those objects whose captions contain word "car":
+   ![exclude](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_midas_hazard_v2%20(1)_frame95.jpg)
+5. Applying road segmentation to exclude objects on road
+   ![seg](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_midas_hazard_v4_road%20(1)_frame95.jpg)
 
 
