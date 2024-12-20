@@ -40,7 +40,7 @@ Original frame
 
 ![Original](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/frame_0095_original.png)
 
-1. Applying NAFNet
+1. Applying NAFNet to improve the quality of videos
    
    ![NAFNET](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/frame_0095.png)
    
@@ -56,7 +56,7 @@ Original frame
  
    ![exclude](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_midas_hazard_v2%20(1)_frame95.jpg)
    
-5. Applying road segmentation to exclude objects on the road:
+5. Applying road segmentation to exclude objects not on the road:
    
    ![seg](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_midas_hazard_v4_road%20(1)_frame95.jpg)
 
