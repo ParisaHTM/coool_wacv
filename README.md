@@ -20,8 +20,6 @@
 
 5. **[baseline_OF_roadmask_blip_midas3.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/baseline_OF_roadmask_blip_midas3.ipynb)**  
    Matches IDs of objects identified as being on the road (from Step 4) and close to the dashcam (from Step 2). Creates captions for objects without captions from Step 3. The process involves handling six scenarios:
-
-   This step focuses on matching objects identified as being on the road (from **Step 4**) and close to the dashcam (from **Step 2**) to generate captions for objects without captions from **Step 3**. Below are the six scenarios handled in this process:
       
       | **Scenario** | **Condition**                                                                                   | **Action**                                                                                                    |
       |--------------|-------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
@@ -31,8 +29,6 @@
       | **4**        | Overlap exceeds 10 objects.                                                                    | Consider all objects from both sets. Use captions from **Step 2** or generate directly using BLIP.           |
       | **5**        | Objects on the road exceed 12.                                                                 | Focus only on these objects to avoid exceeding limits. Use captions from **Step 2** or generate directly using BLIP. |
       | **6**        | No overlap between road segmentation and MiDaS, and no captions from **Step 2**.               | Apply Ground Captioning. If still no captions, generate them directly using BLIP.                            |
-      
-      This table provides a clear guide to handle all possible scenarios in Step 5 efficiently.
 
 
 6. **[correct_wrong_caption_dr_result.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/correct_wrong_caption_dr_result.ipynb)**  
