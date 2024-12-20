@@ -37,16 +37,27 @@
 
 ## Results
 Original frame
+
 ![Original](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/frame_0095_original.png)
+
 1. Applying NAFNet
+   
    ![NAFNET](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/frame_0095.png)
+   
 2. All objects
+   
    ![All_objects](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_hazard%20(2)_frame95.jpg)
+   
 3. Applying optical flow to determine driver_state and MiDaS to exclude far objects:
+   
    ![MIDAS](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_midas_hazard_v1_frame95.jpg)
-4. Generate captions for those close objects and exclude those objects whose captions contain word "car":
+   
+4. Generate captions for those close objects and exclude those objects whose captions contain the word "car":
+ 
    ![exclude](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_midas_hazard_v2%20(1)_frame95.jpg)
-5. Applying road segmentation to exclude objects on road
+   
+5. Applying road segmentation to exclude objects on the road:
+   
    ![seg](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_midas_hazard_v4_road%20(1)_frame95.jpg)
 
 
