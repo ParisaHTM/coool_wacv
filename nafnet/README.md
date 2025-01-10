@@ -11,6 +11,6 @@ NAFNet is pre-trained models for image restoration.
 6. Apply NAFNet model to each frame.
    
    ```python3 nafnet.py -video_path <PATH_TO_ORG_VIDEOS> -frame_folder <PATH_TO_ENHANCED_FRAMES> -processed_videos_folder <PATH_TO_SAVE_ENHANCED_VIDEOS> -script_path <PATH_TO_demo.py_NAFNet> -config_path <PATH_To_DOWNLOADED_MODEL> -python_executable <PATH_TO_PYTHON_ENV>```
-8. Integrated enhanced frames to created enhanced videos.
+8. Integrate enhanced frames to created enhanced videos.
    
  ```python3 enhanced_videos.py -video_path <PATH_TO_ORG_VIDEOS> -frame_folder <PATH_TO_ENHANCED_FRAMES> -processed_videos_folder <PATH_TO_SAVED_ENHANCED_VIDEOS>```
