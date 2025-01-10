@@ -4,7 +4,7 @@ NAFNet is pre-trained models for image restoration.
 1. Clone NAFNet:
    
    ```git clone https://github.com/megvii-research/NAFNet.git ```
-3. Download a pre-trained model from [NAFNet GitHub repository](https://github.com/megvii-research/NAFNet/tree/main) (We used the model that deblurs image ([link](https://github.com/megvii-research/NAFNet/tree/main#:~:text=demo/denoise_img.png-,Image%20Deblur%3A,-python%20basicsr/demo)))
+3. Download a pre-trained model from [NAFNet GitHub repository](https://github.com/megvii-research/NAFNet/tree/main) (We used the model that deblurs image ([link](https://github.com/megvii-research/NAFNet/tree/main/options/test/REDS)))
 4. Extract all frames from videos.
    
    ```python3 frames_from_videos.py -video_path <PATH_TO_ORG_VIDEOS> -frame_folder <PATH_FOR_SAVING_ENHANCED_FRAMES>```
