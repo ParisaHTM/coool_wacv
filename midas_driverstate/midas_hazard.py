@@ -17,6 +17,7 @@ def write_csv(video_frame, driver_state_flag, results_file):
         "".join([f",{row_data[f'Hazard_Track_{i}']},{row_data[f'Hazard_Name_{i}']}" for i in range(23)]) +
         "\n"
     )
+        
 def setup_midas(model_type="DPT_Large"):
     """Initialize the MiDas model and transformations."""
     midas = torch.hub.load("intel-isl/MiDaS", model_type)
@@ -122,7 +123,7 @@ def retain_first_and_get_unique_ids(def_far_all, num_id):
 def process_video(video_path, annotations, video, midas, transform, device, output_dir, driver_state, results_file):
     video_stream = cv2.VideoCapture(video_path)
     assert video_stream.isOpened()
-    out = create_output_video(video_stream, output_dir, name="midas")
+    out = create_output_video(video_stream, output_dir, name="midas_test")
 
     frame_num = 0
     track_id_lifecycle = {}
@@ -181,17 +182,17 @@ def find_close_object(def_far_all, track_id_lifecycle, output_dir, video):
     unique_ids, unique_hazards, brightest_frame_per_object = retain_first_and_get_unique_ids(def_far_all, num_id)
     if len(unique_hazards) > 0:
         unique_ids = unique_hazards
-    video_stream_midas = cv2.VideoCapture(os.path.join(output_dir, f"{video}_midas.mp4"))
-     out = create_output_video(video_stream_midas, output_dir, "midas_hazard_v1.mp4")
-     hazard_midas = {}
-     while video_stream_midas.isOpened():
+    video_stream_midas = cv2.VideoCapture(os.path.join(output_dir, f"{video}_midas_test.mp4"))
+    out = create_output_video(video_stream_midas, output_dir, "midas_hazard_v1_test.mp4")
+    hazard_midas = {}
+    while video_stream_midas.isOpened():
            ret, frame_image_midas = video_stream_midas.read()
            if ret == False: #False means end of video or error
                 assert frame_midas == len(annotations[video].keys())-1 #End of the video must be final frame
                 break
                 
-            for ann_type in ['challenge_object']:
-                for i in range(len(annotations[video][frame_midas][ann_type])):
+           for ann_type in ['challenge_object']:
+               for i in range(len(annotations[video][frame_midas][ann_type])):
                     x1, y1, x2, y2 = annotations[video][frame_midas][ann_type][i]['bbox']
                     track_id = annotations[video][frame_midas][ann_type][i]['track_id']
                     if str(track_id) in unique_ids:  # Only process unique IDs
@@ -199,14 +200,14 @@ def find_close_object(def_far_all, track_id_lifecycle, output_dir, video):
                         cv2.putText(frame_image_midas, f"ID: {track_id}", (int(x1), int(y1) - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
                         
-            out_midas.write(frame_image_midas)
-            frame_midas += 1
+           out_midas.write(frame_image_midas)
+           frame_midas += 1
             
-     unique_ids_with_brightest_frame = {obj_id: brightest_frame_per_object[obj_id][0] for obj_id in unique_ids}
-        # Load the hazard_midas dictionary
-        with open(f"./unique_ids/unique_ids_{video}.pkl", "wb") as f:
-            pickle.dump(unique_ids_with_brightest_frame, f)
-    
-        video_stream_midas.release()
-        out_midas.release()
+           unique_ids_with_brightest_frame = {obj_id: brightest_frame_per_object[obj_id][0] for obj_id in unique_ids}
+                # Load the hazard_midas dictionary
+           with open(f"./unique_ids/unique_ids_{video}_test.pkl", "wb") as f:
+                pickle.dump(unique_ids_with_brightest_frame, f)
+
+    video_stream_midas.release()
+    out_midas.release()
     
