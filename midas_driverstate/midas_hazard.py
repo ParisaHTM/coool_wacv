@@ -1,10 +1,12 @@
+import sys
 import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import cv2
 import numpy as np
 import pickle
 import torch
 from tqdm import tqdm
-from constants import create_directories
+from constants.utils import create_output_video, create_directories
 
 def write_csv(video_frame, driver_state_flag, results_file):
     row_data = {"ID": video_frame, "Driver_State_Changed": driver_state_flag}
@@ -23,8 +25,8 @@ def setup_midas(model_type="DPT_Large"):
     midas = torch.hub.load("intel-isl/MiDaS", model_type)
     midas.to(torch.device("cuda" if torch.cuda.is_available() else "cpu"))
     midas.eval()
-    transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
-    transform = transforms.dpt_transform if model_type in ["DPT_Large", "DPT_Hybrid"] else transforms.small_transform
+    midas_transforms = torch.hub.load("intel-isl/MiDaS", "transforms")
+    transform = midas_transforms.dpt_transform if model_type in ["DPT_Large", "DPT_Hybrid"] else midas_transforms.small_transform
     return midas, transform
 
 def is_object_far(x1, y1, x2, y2, frame_image, midas, transform, device):
@@ -123,7 +125,7 @@ def retain_first_and_get_unique_ids(def_far_all, num_id):
 def process_video(video_path, annotations, video, midas, transform, device, output_dir, driver_state, results_file):
     video_stream = cv2.VideoCapture(video_path)
     assert video_stream.isOpened()
-    out = create_output_video(video_stream, output_dir, name="midas_test")
+    out = create_output_video(video_stream, output_dir, "midas_test", video_path)
 
     frame_num = 0
     track_id_lifecycle = {}
@@ -155,7 +157,7 @@ def process_video(video_path, annotations, video, midas, transform, device, outp
         if frame_num == 0:
             frame_num += 1
             continue
-        driver_state_flag = diver_state.calc_slop(frame, frame_image)
+        driver_state_flag = driver_state.calc_slop(frame_num, frame_image)
         write_csv(video_frame, driver_state_flag, results_file)
         cv2.putText(frame_image, str(driver_state_flag), (10, 30),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
@@ -176,20 +178,21 @@ def process_video(video_path, annotations, video, midas, transform, device, outp
     out.release()
     return def_far_all, track_id_lifecycle
 
-def find_close_object(def_far_all, track_id_lifecycle, output_dir, video):
+def find_close_object(annotations, def_far_all, track_id_lifecycle, output_dir, video, video_path):
     num_id = len(track_id_lifecycle)
     frame_midas = 0        
     unique_ids, unique_hazards, brightest_frame_per_object = retain_first_and_get_unique_ids(def_far_all, num_id)
     if len(unique_hazards) > 0:
         unique_ids = unique_hazards
     video_stream_midas = cv2.VideoCapture(os.path.join(output_dir, f"{video}_midas_test.mp4"))
-    out = create_output_video(video_stream_midas, output_dir, "midas_hazard_v1_test.mp4")
+    out_midas = create_output_video(video_stream_midas, output_dir, "midas_hazard_v1_test.mp4", video_path)
     hazard_midas = {}
     while video_stream_midas.isOpened():
            ret, frame_image_midas = video_stream_midas.read()
            if ret == False: #False means end of video or error
-                assert frame_midas == len(annotations[video].keys())-1 #End of the video must be final frame
-                break
+               break
+           if frame_midas == len(annotations[video].keys()): #End of the video must be final frame
+              break
                 
            for ann_type in ['challenge_object']:
                for i in range(len(annotations[video][frame_midas][ann_type])):
@@ -203,10 +206,11 @@ def find_close_object(def_far_all, track_id_lifecycle, output_dir, video):
            out_midas.write(frame_image_midas)
            frame_midas += 1
             
-           unique_ids_with_brightest_frame = {obj_id: brightest_frame_per_object[obj_id][0] for obj_id in unique_ids}
-                # Load the hazard_midas dictionary
-           with open(f"./unique_ids/unique_ids_{video}_test.pkl", "wb") as f:
-                pickle.dump(unique_ids_with_brightest_frame, f)
+    unique_ids_with_brightest_frame = {obj_id: brightest_frame_per_object[obj_id][0] for obj_id in unique_ids}
+    # Load the hazard_midas dictionary
+    create_directories(f"./unique_ids")
+    with open(f'./unique_ids/unique_ids_{video}_test.pkl', "wb") as f:
+        pickle.dump(unique_ids_with_brightest_frame, f)
 
     video_stream_midas.release()
     out_midas.release()
