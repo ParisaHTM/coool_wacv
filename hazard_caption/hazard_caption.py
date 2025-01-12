@@ -39,11 +39,8 @@ def detect_hazard(object_cor, frame):
     
     inputs = processor_hazard(cropped_image, text=prompt0, return_tensors="pt").to(device, torch.float16)
     generated_ids = model_hazard.generate(**inputs, max_new_tokens=10)
-    # print(f"Generated IDs: {generated_ids}")
     generated_text_general = processor_hazard.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
-    # print("generated_text_general:", generated_text_general)
     generated_text_general = generated_text_general.split()[-1]
-    # print("Last word of generated_text:", generated_text_general)
 
     contains_car = "car" in generated_text_general.lower()
     contains_human = any(word in generated_text_general.lower() for word in ["human", "person", "man", "woman", "men", "women", "kid"])
@@ -53,11 +50,9 @@ def detect_hazard(object_cor, frame):
     
     if contains_car:
         prompt1 = "Question: Is this car in the opposing lane or a preceding vehicle or in the wrong way? Answer:"
-        # print("prompt1:", prompt1)
         inputs = processor_hazard(cropped_image, text=prompt1, return_tensors="pt").to(device, torch.float16)
         generated_ids = model_hazard.generate(**inputs, max_new_tokens=100)
         generated_text = processor_hazard.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
-        # print("generated_text_car:", generated_text)
         contains_lane = any(word in generated_text.lower() for word in ["wrong", "opposing"])
         if contains_lane:
             is_it_hazard = False
@@ -70,11 +65,9 @@ def detect_hazard(object_cor, frame):
         appearance_caption = processor_hazard.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
         
         prompt1 = "Question: Is this person crossing the street? Answer:"
-        # print("prompt1:", prompt1)
         inputs = processor_hazard(cropped_image, text=prompt1, return_tensors="pt").to(device, torch.float16)
         generated_ids = model_hazard.generate(**inputs, max_new_tokens=100)
         generated_text = processor_hazard.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
-        # print("generated_text_human:", generated_text)
         contains_lane = any(word in generated_text.lower() for word in ["yes"])
         
         if contains_lane:
@@ -94,11 +87,9 @@ def detect_hazard(object_cor, frame):
         appearance_caption = processor_hazard.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
         
         prompt1 = "Question: Is this animal crossing the street? Answer:"
-        # print("prompt1:", prompt1)
         inputs = processor_hazard(cropped_image, text=prompt1, return_tensors="pt").to(device, torch.float16)
         generated_ids = model_hazard.generate(**inputs, max_new_tokens=100)
         generated_text = processor_hazard.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
-        # print("generated_text_animal:", generated_text)
         contains_lane = any(word in generated_text.lower() for word in ["yes"])
         
         if contains_lane:
@@ -118,11 +109,9 @@ def detect_hazard(object_cor, frame):
         appearance_caption = processor_hazard.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
         
         prompt1 = "Question: Is this object thrown into the air? Answer:"
-        # print("prompt1:", prompt1)
         inputs = processor_hazard(cropped_image, text=prompt1, return_tensors="pt").to(device, torch.float16)
         generated_ids = model_hazard.generate(**inputs, max_new_tokens=100)
         generated_text = processor_hazard.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
-        # print("generated_text_flying:", generated_text)
         contains_lane = any(word in generated_text.lower() for word in ["yes"])
         if contains_lane:
             caption = "It is a "+ str(generated_text_general) + f". The {generated_text_general} is thrown to air {appearance_color}. {appearance_caption}."
@@ -141,11 +130,9 @@ def detect_hazard(object_cor, frame):
         appearance_caption = processor_hazard.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
         
         prompt1 = "Question: Is this object on the road? Answer:"
-        # print("prompt1:", prompt1)
         inputs = processor_hazard(cropped_image, text=prompt1, return_tensors="pt").to(device, torch.float16)
         generated_ids = model_hazard.generate(**inputs, max_new_tokens=100)
         generated_text = processor_hazard.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
-        # print("generated_text_object:", generated_text)
         contains_lane = any(word in generated_text.lower() for word in ["yes"])
         if contains_lane:
             caption = "It is an object on the "+ str(generated_text_general) + f". The object is on the road {appearance_color}. {appearance_caption}."
