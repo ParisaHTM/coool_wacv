@@ -4,23 +4,35 @@
 
  ## Overview
  We used different tools and models like optical flow, NAFNet, MiDaS, Segformer, and BLIP to do its tasks.
+ ![nafnet](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/nafnet_new.jpg)
+ ![overview](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/all_show_objects_new.jpg)
 
 ## Structure and Steps
 
-1. **[nafnet_on_frames.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/nafnet_on_frames.ipynb)**  
-   Utilizes NAFNet to improve the quality of videos.
+1. **[nafnet](https://github.com/ParisaHTM/coool_wacv/tree/main/nafnet)**  
+   Utilizes NAFNet to improve the quality of videos. Do all the steps in the folder to have access to NAFNet model.
 
-2. **[baseline_OF_roadmask_blip_midas1.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/baseline_OF_roadmask_blip_midas1.ipynb)**  
+2. **[midas_driverstate](https://github.com/ParisaHTM/coool_wacv/tree/main/midas_driverstate)**  
    Applying optical flow to determine the driver state and uses MiDaS to exclude far objects. Saving frames where close objects are nearest to the dashcam.
 
-3. **[baseline_OF_roadmask_blip_midas2.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/baseline_OF_roadmask_blip_midas2.ipynb)**  
+   Run:
+
+   ```python3 <root_repository>/coool_wacv/midas_driverstate/main.py```
+
+4. **[hazard_caption](https://github.com/ParisaHTM/coool_wacv/tree/main/hazard_caption)**  
    Generating captions for detected close objects using grounding captions in BLIP (We expanded the boxes for BLIP to see context as well).Excluding close objects recognized as "car" from this step.
 
-4. **[road_masking.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/road_masking.ipynb)**  
-   Using Segformer for road segmentation and saves the IDs of objects located on the road.
+   Run:
 
-5. **[baseline_OF_roadmask_blip_midas3.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/baseline_OF_roadmask_blip_midas3.ipynb)**  
-   Matching IDs of objects identified as being on the road (from Step 4) and close to the dashcam (from Step 2). Creating captions for objects without captions from Step 3. The process involves handling six scenarios:
+   ```python3 <root_repository>/coool_wacv/hazard_caption/main.py```
+
+6. **[midas_road](https://github.com/ParisaHTM/coool_wacv/tree/main/midas_road)**  
+   Using Segformer for road segmentation and saves the IDs of objects located on the road. Matching IDs of objects identified as being on the road (from Step 4) and close to the dashcam (from Step 2). Creating captions for objects without captions from Step 3. The process involves handling six scenarios:
+
+   Run:
+
+   ```python3 <root_repository>/coool_wacv/midas_road/main.py```
+  
       
       | **Scenario** | **Condition**                                                                                   | **Action**                                                                                                    |
       |--------------|-------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
@@ -31,38 +43,9 @@
       | **5**        | Objects on the road exceed 12.                                                                 | Focus only on these objects to avoid exceeding limits. Use captions from **Step 2** or generate directly using BLIP. |
       | **6**        | No overlap between road segmentation and MiDaS, and no captions from **Step 2**.               | Apply Ground Captioning. If still no captions, generate them directly using BLIP.                            |
 
-
-6. **[correct_wrong_caption_dr_result.ipynb](https://github.com/ParisaHTM/coool_wacv/blob/main/correct_wrong_caption_dr_result.ipynb)**  
-   Handling cases where videos recognize wrong hazards or have incorrect captions. Reappling depth calculation to identify the frame closest to the dashcam and regenerating captions for this frame and surrounding frames. Select captions containing specific keywords, considering their frequency.
-
-7. **[Hazard_via_depth_and_motion_slopes.py](https://github.com/ParisaHTM/coool_wacv/blob/main/Hazard_via_depth_and_motion_slopes.py)**
-   Ablation Study: Loads annotations and results, then iterates through multiple videos frame by frame.
-It uses a depth-estimation model to compute depth maps for objects and a captioning model to describe them.
-By tracking objects and calculating their slopes and relative depths, it identifies potential hazards. These hazards are annotated on the frames, including their average depth, captions, and directional movement.
-
 ## Results
-Original frame
+![Original](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/original.gif) ![midas_road](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/midas_road.gif)
 
-![Original](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/frame_0095_original.png)
 
-1. Applying NAFNet to improve the quality of videos
-   
-   ![NAFNET](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/frame_0095.png)
-   
-2. All objects
-   
-   ![All_objects](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_hazard%20(2)_frame95.jpg)
-   
-3. Applying optical flow to determine driver_state and MiDaS to exclude far objects:
-   
-   ![MIDAS](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_midas_hazard_v1_frame95.jpg)
-   
-4. Generate captions for those close objects and exclude those objects whose captions contain the word "car":
- 
-   ![exclude](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_midas_hazard_v2%20(1)_frame95.jpg)
-   
-5. Applying road segmentation to exclude objects not on the road:
-   
-   ![seg](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/video_0001_midas_hazard_v4_road%20(1)_frame95.jpg)
 
 
