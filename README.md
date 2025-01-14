@@ -44,11 +44,9 @@
       | **6**        | No overlap between road segmentation and MiDaS, and no captions from **Step 2**.               | Apply Ground Captioning. If still no captions, generate them directly using BLIP.                            |
 
 ## Results
-- All objects in a video
-![Original](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/original.gif)
 
-- Detecting and captioning hazard(s)
-![midas_road](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/midas_road.gif)
+![Original](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/detected_hazard.gif)
+
 
 
 
