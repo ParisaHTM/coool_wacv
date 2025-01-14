@@ -1,5 +1,5 @@
 ﻿# Challenge Of Out-Of-Label in Autonomous Driving
-![COOOL](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/Logo%20maker%20project-3%20(11).png)
+![COOOL](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/logo_coool.png)
  WACV2025 Challenge for detecting Out-Of-Label hazards from dashcam videos ([Link to challenge](https://sites.google.com/ucr.edu/cooolsworkshop/home))
 
  ## Overview
