@@ -12,14 +12,22 @@
 1. **[nafnet](https://github.com/ParisaHTM/coool_wacv/tree/main/nafnet)**  
    Utilizes NAFNet to improve the quality of videos. Do all the steps in the folder to have access to NAFNet model.
 
-2. **[midas_driverstate](https://github.com/ParisaHTM/coool_wacv/tree/main/midas_driverstate)**  
+2. **Create a virtual env and install dependencies**
+
+   ```
+   python3 -m venv <env_path>
+   conda actiavte <env_path>
+   conda install --file requirements.txt"
+   ```   
+
+4. **[midas_driverstate](https://github.com/ParisaHTM/coool_wacv/tree/main/midas_driverstate)**  
    Applying optical flow to determine the driver state and uses MiDaS to exclude far objects. Saving frames where close objects are nearest to the dashcam.
 
    Run:
 
    ```python3 <root_repository>/coool_wacv/midas_driverstate/main.py```
 
-4. **[hazard_caption](https://github.com/ParisaHTM/coool_wacv/tree/main/hazard_caption)**  
+5. **[hazard_caption](https://github.com/ParisaHTM/coool_wacv/tree/main/hazard_caption)**  
    Generating captions for detected close objects using grounding captions in BLIP (We expanded the boxes for BLIP to see context as well).Excluding close objects recognized as "car" from this step.
 
    Run:
@@ -44,7 +52,6 @@
       | **6**        | No overlap between road segmentation and MiDaS, and no captions from **Step 2**.               | Apply Ground Captioning. If still no captions, generate them directly using BLIP.                            |
 
 ## Results
-
 ![Original](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/detected_hazard.gif)
 
 
