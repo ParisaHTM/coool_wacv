@@ -1,6 +1,6 @@
 ﻿# Challenge Of Out-Of-Label in Autonomous Driving
 ![COOOL](https://github.com/ParisaHTM/coool_wacv/blob/main/sample_images/Logo%20maker%20project-3%20(11).png)
- WACV2025 Challenge for detecting Out-Of-Label hazards from dashcam videos
+ WACV2025 Challenge for detecting Out-Of-Label hazards from dashcam videos ([Link to challenge](https://sites.google.com/ucr.edu/cooolsworkshop/home))
 
  ## Overview
  We used different tools and models like optical flow, NAFNet, MiDaS, Segformer, and BLIP to do its tasks.
